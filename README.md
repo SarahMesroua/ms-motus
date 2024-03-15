@@ -60,11 +60,16 @@ sequenceDiagram
         alt Game won
             Motus App-->>Motus Microservice: Submit user input with the right word => Game won
             Motus Microservice-->>Motus App: Game result response
+            Motus App->>Score Microservice: Set user score
+            Score Microservice->>Database Redis Score: Set user score
+
         end
     end
     Motus App->>Score Microservice: Request user score
+    Score Microservice->>Database Redis Score: Get user score
+    Database Redis Score-->>Score Microservice: User score response
     Score Microservice-->>Motus App: User score response
-    Motus App->>Motus App: Display game results and leaderboard
+    Motus App->>Motus App: Display game results
 ```
 ## 1.Informations Générales
 Utilisation de Express pour créer un serveur pour chaque microservice :
@@ -133,14 +138,30 @@ Ce service gère l'authentification des utilisateurs de l'application Motus.
    - Route `/get/:key` : récupère la valeur d'une clé spécifique dans Redis.
    - Route `/delete/:username` : supprime toutes les clés correspondant à la valeur de l'utilisateur spécifié dans Redis.
 
-##
-## . Page HTML
+## 5. Gestion du jeu (`script_index.js`)
+Le fichier `script_index.js` permet de jouer à une partie de MOTUS. Il gère l'affichage de la grille, la saisie des lettres par l'utilisateur, la vérification des correspondances et le calcul du score.
+
+- Mise en page et affichage de la grille, des lettres, etc :
+    - Initialisation de la grille du jeu : Des cellules vides sont ajoutées à chaque ligne de la grille en fonction de la taille du mot du jour.
+    - Pré-remplissage de la grille : Les cellules de la grille sont pré-remplies avec des points (`.`) en utilisant la fonction `point()` et première cellule de chaque ligne est remplie avec la première lettre du mot du jour en utilisant la fonction `lettre()`.
+    - Traitement des lettres : Lorsque l'utilisateur appuie sur  "Entrée", le mot proposées par l'utilisateur est récupéré et comparé avec le mot du jour.
+    - Gestion du délai : fonction `traitementAvecDelai(i, callback)` définie pour traiter chaque lettre avec un délai de 0,3 seconde entre chaque lettre. cela permet d'ajouter une animation
+    - Passage à la ligne suivante : fonction `passerALaLigneSuivante()` définie pour passer à la ligne suivante une fois que le traitement des lettres est terminé. Si toutes les lettres sont correctement placées, le score est mis à jour et un message de félicitations est affiché. Sinon, la grille passe à la ligne suivante.
+    - Suppression d'une lettre : Lorsque l'utilisateur appuie sur la touche "Effacer", la dernière lettre saisie est supprimée de la grille.
+
+- Fonction de jeu, de comparaison et de score :
+    - Fonction `strNoAccent(a)` : Supprime les accents d'une chaîne de caractères en utilisant la méthode `normalize`.
+    - Requête AJAX (`$.get("/wordOfTheDay", (data) => { ... });`) : Récupère le mot du jour depuis l'URL "/wordOfTheDay". Le mot du jour est stocké dans la variable `motDuJour` après avoir été converti en majuscules et sans accents à l'aide de la fonction `strNoAccent(a)`.
+    - Fonction `sontIdentiques(liste1, liste2)` : Vérifie si deux listes sont identiques en comparant leur longueur et en utilisant la méthode `every` pour vérifier si chaque élément est égal dans les deux listes.
+    - Requête AJAX (`$.get("/getScore", (data) => { ... });`) : Récupère le score depuis l'URL "/getScore" et l'affiche dans un élément HTML avec l'ID "score".
+
+## 6. Page HTML
 Les pages HTML ```login.html```, ```motus.html``` et ```signup.html``` définisse les pages qui contiennent le jeux de MOTUS, la page de connexion si l'utilisateur à un compte et la page d'inscription si l'utilisateur n'a pas de compte. 
 
-## 6. `Dockerfile` et Docker Compose (`docker-compose.yml`)
+## 7. `Dockerfile` et Docker Compose (`docker-compose.yml`)
 
 # Configuration et Utilisation :wrench:
-1. Installer :
+1. Installez :
     - Node.js : 
     - Redis
     - 
@@ -158,15 +179,13 @@ Les pages HTML ```login.html```, ```motus.html``` et ```signup.html``` définiss
 
 Installer sqlite3 : ```sudo apt install sqlite3```
 
-```database.db``` dans ```le folder flask-auth/instance/```
+```database.db``` dans ```le folder flask-auth/instance/``` contient les données utilisateurs
 
-database.db dans le folder flask-auth/instance/
 ![image](https://github.com/SarahMesroua/ms-motus/assets/101985507/8443626b-48f4-4b3c-bcc5-7ef2bd00e83a)
 
-Contient les données utilisateurs
-
-Pour y accéder dans le terminal : se placer dans le folder instance:
-- sqlite3 database.db
-- sqlite> .schema user; ⇒ affiche la table user et ses caractéristiques: id, username,password,ticket
-- sqlite> requête SQL select * from  user; (on sélection tout de la table user)
+Pour y accéder dans le terminal : 
+- Se placer dans le folder instance:
+    - sqlite3 database.db
+    - sqlite> .schema user; ⇒ affiche la table user et ses caractéristiques: id, username,password,ticket
+    - sqlite> requête SQL select * from  user; (on sélection tout de la table user)
 
