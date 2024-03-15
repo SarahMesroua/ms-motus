@@ -133,7 +133,8 @@ Ce service gère l'authentification des utilisateurs de l'application Motus.
    - Route `/get/:key` : récupère la valeur d'une clé spécifique dans Redis.
    - Route `/delete/:username` : supprime toutes les clés correspondant à la valeur de l'utilisateur spécifié dans Redis.
 
-## 5. Page HTML
+##
+## . Page HTML
 Les pages HTML ```login.html```, ```motus.html``` et ```signup.html``` définisse les pages qui contiennent le jeux de MOTUS, la page de connexion si l'utilisateur à un compte et la page d'inscription si l'utilisateur n'a pas de compte. 
 
 ## 6. `Dockerfile` et Docker Compose (`docker-compose.yml`)
@@ -148,17 +149,24 @@ Les pages HTML ```login.html```, ```motus.html``` et ```signup.html``` définiss
 
 3. Vous pouvez maintenant accéder à l'application Motus en lancant la commande ```git clone <url du repo> ``` et en ouvrant le navigateur l'URL appropriée.
 
-# Travail Bonus : Flask
-installer les dépendances flask:
-dans le terminal:
-``ip install flask flask_sqlalchemy flask_login flask_bcrypt flask_wtf wtforms email_validator`
-avec flask : le localhost a le port 5000 par défaut (python3 app.py)
-donc https://localhost:5000
+# Travail Bonus : Flask sur le répo https://github.com/Benji2709/ms-motus
+- Installer les dépendances flask:
+- Dans le terminal:
+    - ``ip install flask flask_sqlalchemy flask_login flask_bcrypt flask_wtf wtforms email_validator`
+    - avec flask : le localhost a le port 5000 par défaut (python3 app.py)
+    - donc le lien est : https://localhost:5000
 
-installer sqlite3 : ```sudo apt install sqlite3```
+Installer sqlite3 : ```sudo apt install sqlite3```
+
+```database.db``` dans ```le folder flask-auth/instance/```
 
 database.db dans le folder flask-auth/instance/
+![image](https://github.com/SarahMesroua/ms-motus/assets/101985507/8443626b-48f4-4b3c-bcc5-7ef2bd00e83a)
 
-contient les données utilisateurs
-pour y accéder dans le terminal : se placer dans le folder instance:
-sqlite3 database.db
+Contient les données utilisateurs
+
+Pour y accéder dans le terminal : se placer dans le folder instance:
+- sqlite3 database.db
+- sqlite> .schema user; ⇒ affiche la table user et ses caractéristiques: id, username,password,ticket
+- sqlite> requête SQL select * from  user; (on sélection tout de la table user)
+
