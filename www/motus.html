@@ -10,6 +10,8 @@
 </head>
 
 <body>
+	<!--a href="./score.html">score</a-->
+
 	<div id="grille" class="grille">
 		<table>
 			<tr selected="selected"></tr>
@@ -21,7 +23,17 @@
 		</table>
 	</div>
 
-	<script src="script.js"></script>
+	<div id="score" style="color: white;
+    text-align: center;
+    margin-top: 5vh;
+	">
+    </div>
+
+	<form action="/logout" method="post" style="text-align: center; margin-top: 3vh;">
+		<button type="submit">Déconnexion</button>
+	</form>
+
+	<script src="script_index.js"></script>
 </body>
 
 </html>

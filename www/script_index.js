@@ -1,13 +1,18 @@
+/*************************************** MOTUS GAME *******************************************/
+
+// enlever les accents
 function strNoAccent(a) {
     return a.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+// mettre des points dans ls cellules vides de la line courante
 function point() {
     let cellules = $('tr[selected="selected"] td');
     cellules.addClass('cellule-lettre-pas-curseur');
     cellules.text('.');
 }
 
+// initialiser la première lettre du mot du jour dans la grille
 function lettre() {
     let premiereCellule = $('tr[selected="selected"] td:first');
     premiereCellule.removeClass('cellule-lettre-pas-curseur');
@@ -15,12 +20,11 @@ function lettre() {
     premiereCellule.append(motDuJour[0]);
 }
 
-/***********************************************************/
+// comparer deux listes
 function sontIdentiques(liste1, liste2) {
     if (liste1.length !== liste2.length) {
         return false;
     }
-    
     return liste1.every((element, index) => element === liste2[index]);
 }
 
@@ -30,7 +34,7 @@ let tailleMotDuJour = 0;
 
 $.get("/wordOfTheDay", (data) => {
 
-    /*** récupérer le mot du jour***/
+    /*** récupérer le mot du jour et le mettre sous forme de liste***/
     console.log(data);
     motDuJour = strNoAccent(data).toUpperCase();
     console.log(motDuJour);
@@ -49,7 +53,7 @@ $.get("/wordOfTheDay", (data) => {
     /*** préremplir par des points ***/
     point();
 
-    /*** remplir la première cellule***/
+    /*** préremplir la première cellule***/
     lettre();
 
     /*** remplir les cellules avec les lettres ***/
@@ -58,7 +62,6 @@ $.get("/wordOfTheDay", (data) => {
 
         if ((codeTouche >= 65 && codeTouche <= 90) || (codeTouche >= 97 && codeTouche <= 122)) {
             let lettreClavier = String.fromCharCode(codeTouche);
-            /*console.log(lettreClavier);*/
             let celluleARemplir = $('td.cellule-lettre-pas-curseur:first');
             celluleARemplir.text(lettreClavier);
             celluleARemplir.removeClass('cellule-lettre-pas-curseur');
@@ -82,42 +85,12 @@ $.get("/wordOfTheDay", (data) => {
                     listeLettres.push(lettre);
                 });
 
-
-
-                /** attribution des classes au cellules selon les lettres proposées**/
-                /*function traitementAvecDelai(i) {
-                    setTimeout(function() {
-                        if (listeMotDuJour[i] == listeLettres[i]) {
-                            cellulesTD[i].classList.add("bien-place", "resultat");
-                        } else if (listeLettres.includes(listeMotDuJour[i])) {
-                            cellulesTD[i].classList.add("mal-place", "resultat");
-                        } else {
-                            cellulesTD[i].classList.add("non-trouve", "resultat");
-                        }
-                    }, i * 300);
-                }
-                
-                for (let i = 0; i < listeMotDuJour.length; i++) {
-                    traitementAvecDelai(i);
-                }*/
-
-
-                /*** le mot n'est pas trouvé, on passe à la ligne suivante ***/
-                /*let ligneSuivante = $('tr[selected="selected"]').next('tr');
-
-                if (ligneSuivante.length > 0) {
-                    $('tr[selected="selected"]').removeAttr('selected');
-                    ligneSuivante.attr('selected', '');
-                    point();
-                    lettre();
-                }*/
-
                 /** attribution des classes au cellules selon les lettres proposées**/
                 function traitementAvecDelai(i, callback) {
                     if (i >= listeMotDuJour.length) {
                         // Si nous avons traité tous les éléments, appeler le callback
                         callback();
-                        return; // Sortie de la fonction
+                        return;
                     }
                 
                     setTimeout(function() {
@@ -155,7 +128,8 @@ $.get("/wordOfTheDay", (data) => {
                 // "Dommage" si il n'y a plus de ligne disponible pour deviner le mot du jour
                 if (sontIdentiques(listeMotDuJour, listeLettres)) {
                     traitementAvecDelai(0, function() {
-                        alert("Félicitation");
+                        $.get("/setScore/50");
+                        alert("Félicitation vous gagnez 50 points");
                     });
                 } else {
                     traitementAvecDelai(0, passerALaLigneSuivante);
@@ -179,6 +153,10 @@ $.get("/wordOfTheDay", (data) => {
             }
         }
     });
+});
 
+/*************************************** SCORE *******************************************/
 
+$.get("/getScore", (data) => {
+    $("#score").html(data);
 });
