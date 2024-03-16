@@ -63,15 +63,18 @@ sequenceDiagram
         alt Game won
             Motus App-->>Motus Microservice: Submit user input with the right word => Game won
             Motus Microservice-->>Motus App: Game result response
-            Motus App->>Score Microservice: Set user score
+            Motus App->>Motus Microservice: Set user score
+            Motus Microservice->>Score Microservice:Set user score
             Score Microservice->>Database Redis Score: Set user score
 
         end
     end
-    Motus App->>Score Microservice: Request user score
+    Motus App->>Motus Microservice: Request user score
+    Motus Microservice->>Score Microservice: Request user score
     Score Microservice->>Database Redis Score: Get user score
     Database Redis Score-->>Score Microservice: User score response
-    Score Microservice-->>Motus App: User score response
+    Score Microservice-->>Motus Microservice: User score response
+    Motus Microservice-->>Motus App: User score response
     Motus App->>Motus App: Display game results
 ```
 ## 1.Informations Générales
@@ -86,15 +89,17 @@ Utilisation de Redis pour la base de données de score et d'utilisateur :
 ```
 // Créer un client Redis
 const client = redis.createClient({
-    url : REDIS_URL
+url: REDIS_URL
 });
-
-(async () => {
-    client.on('connect', function () {
-        console.log('Connected to score / to auth ');       
-    })
-    await client.connect();
-})();
+const connectToRedis = async () => {
+try {
+await client.connect();
+console.log('Connected to Redis');
+} catch (error) {
+console.error('Failed to connect to Redis:', error.message);
+}
+};
+connectToRedis();
 ```
 
 
@@ -106,7 +111,7 @@ Ce service est responsable de la gestion du système de score de l'application M
 - Port spécifié : port 3000 (par défaut)
 - Définitions des APIs :
   - Middleware  `isLoggedIn` :  vérifie si l'utilisateur est authentifié afin de permettre l'accès au routes de l'application. Si l'utilisateur n'est pas authentifié et que la route demandée n'est pas "/callback", l'utilisateur est redirigé vers un serveur d'authentification pour effectuer la connexion.
-  - Route `/callback` gère la réponse après une authentification réussie. Lorsqu'un utilisateur est redirigé vers cette route après s'être authentifié, elle récupère le code d'autorisation, effectue une requête vers un serveur d'authentification pour échanger le code contre un jeton d'accès. Le ticket d'accès est ensuite vérifié et le nom d'utilisateur est extrait à partir de celui-ci. Enfin, le nom d'utilisateur est stocké dans la session de l'utilisateur et l'utilisateur est redirigé vers la page d'accueil.
+  - Route `/callback` gère la réponse après une authentification réussie. Lorsqu'un utilisateur est redirigé vers cette route après s'être authentifié, elle récupère le code d'autorisation, effectue une requête vers un serveur d'authentification pour échanger le code contre un ticket d'accès. Le ticket d'accès est ensuite vérifié et le nom d'utilisateur est extrait à partir de celui-ci. Enfin, le nom d'utilisateur est stocké dans la session de l'utilisateur et l'utilisateur est redirigé vers la page d'accueil.
   -  Route `/logout` gère la déconnexion de l'utilisateur. Supprime le ticket et la session et redirige l'utilisateur vers la page d'accueil.
   - Route racine `'/'` renvoie le fichier "motus.html" situé dans le dossier "www".
   - Route `/wordOfTheDay` permet de génerer le mot du jour à partir de la liste des mots (fichier `liste_francais_utf8.txt`) et de la fonction `generateDailyRandomNumber` qui génère un nombre aléatoire quotidien basé sur la date actuelle.
