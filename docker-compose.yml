@@ -34,6 +34,36 @@ services:
       - redis1
       - redis2
 
+  auth:
+    build: ./auth
+    ports:
+      - 4000:4000
+    environment:
+      - REDIS_URL=redis://redis2:6379
+    networks:
+      - redis_net
+    restart: always
+    depends_on:
+      - redis2
+
+  motus:
+    build: ./motus
+    ports:
+      - 3000:3000
+    networks:
+      - redis_net
+    restart: always
+
+  score:
+    build: ./score
+    ports:
+      - 3500:3500
+    environment:
+      - REDIS_URL=redis://redis1:6379
+    networks:
+      - redis_net
+    restart: always
+
 networks:
   redis_net:
     ipam:
