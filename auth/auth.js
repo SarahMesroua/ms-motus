@@ -11,22 +11,22 @@ const app = express();
 const port = process.env.PORT || 4000;
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6380';
 
-// Créer un client Redis
 const client = redis.createClient({
-    url : REDIS_URL
+    url: REDIS_URL
 });
 
-// Connexion à l'instance Redis score
-(async () => {
+const connectToRedis = async () => {
+    try {
+        await client.connect();
+        console.log('Connected to Redis');
+    } catch (error) {
+        console.error('Failed to connect to Redis:', error.message);
+    }
+};
 
-    client.on('connect', function () {
-        console.log('Connected to score!');
-        
-    });
+connectToRedis();
 
-    await client.connect();
 
-})();
 
 /*** API ***/
 
@@ -146,7 +146,7 @@ app.post('/signup', async (req, res) => {
         await axios.get(`http://localhost:4000/set/${username}/${password}`);
         
         // Enregistrer l'utilisateur dans le service de score
-        await axios.get(`http://localhost:3500/setUser/${username}/0`);
+        await axios.get(`http://score:3500/setUser/${username}/0`);
 
         // Rediriger l'utilisateur vers la page d'accueil après l'enregistrement réussi
         res.redirect(`http://localhost:3000`);
