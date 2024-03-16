@@ -163,11 +163,16 @@ Les pages HTML ```login.html```, ```motus.html``` et ```signup.html``` définiss
 # Configuration et Utilisation :wrench:
 1. Installez ou vérifiez que vous avez installer :
     - Node.js : `sudo apt-get install nodejs`
-    - Redis
+    - Redis : npm install eredis
     - Express : `npm install express`
-    - Haproxy : `sudo apt-get install haproxy`
+    - Express-session : `npm install express-session`
+    - Axios : `npm install axios`
+    - Jsonwebtoken : `npm install jsonwebtoken`
+
+
       
-2. Clonez ce répertoire sur votre machine locale :  ```git clone <url du repo> ```
+2. Clonez ce répertoire sur votre machine locale :  ```git clone git@github.com:SarahMesroua/ms-motus.git
+ ```
 
 3. Vous pouvez maintenant accéder à l'application Motus en lancant la commande ```git clone <url du repo> ``` et en ouvrant le navigateur l'URL appropriée.
 
