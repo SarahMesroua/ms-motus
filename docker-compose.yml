@@ -6,7 +6,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - redis_net
+      - ms-motus_redis_net
     volumes:
       - ./data/redis/redis1:/data
     restart: always
@@ -16,7 +16,7 @@ services:
     ports:
       - "6380:6379"
     networks:
-      - redis_net
+      - ms-motus_redis_net
     volumes:
       - ./data/redis/redis2:/data
     restart: always
@@ -26,7 +26,7 @@ services:
     ports:
       - "8001:8001"
     networks:
-      - redis_net
+      - ms-motus_redis_net
     volumes:
       - ./data/redisinsight:/db
     restart: always
@@ -41,7 +41,7 @@ services:
     environment:
       - REDIS_URL=redis://redis2:6379
     networks:
-      - redis_net
+      - ms-motus_redis_net
     restart: always
     depends_on:
       - redis2
@@ -51,7 +51,7 @@ services:
     ports:
       - 3000:3000
     networks:
-      - redis_net
+      - ms-motus_redis_net
     restart: always
 
   score:
@@ -61,11 +61,11 @@ services:
     environment:
       - REDIS_URL=redis://redis1:6379
     networks:
-      - redis_net
+      - ms-motus_redis_net
     restart: always
 
 networks:
-  redis_net:
+  ms-motus_redis_net:
     ipam:
       driver: default
       config:
