@@ -1,0 +1,57 @@
+ERROR 2024-03-13 00:00:21,072 redisinsight Connection error while connecting to redis instance: Error -3 connecting to redis:6379. Temporary failure in name resolution.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/redis/connection.py", line 559, in connect
+    sock = self._connect()
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/redis/connection.py", line 584, in _connect
+    for res in socket.getaddrinfo(self.host, self.port, self.socket_type,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 961, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "./redisinsight/utils/__init__.py", line 199, in _wrapped_view
+  File "./redisinsight/core/views/decorators.py", line 21, in wrapped_view
+  File "./redisinsight/monitoring/views.py", line 161, in get_overview_info
+  File "./redisinsight/monitoring/views.py", line 131, in _get_metrics
+  File "/usr/local/lib/python3.11/site-packages/redis/client.py", line 1304, in info
+    return self.execute_command('INFO')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/redis/client.py", line 898, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/redis/connection.py", line 1192, in get_connection
+    connection.connect()
+  File "/usr/local/lib/python3.11/site-packages/redis/connection.py", line 563, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error -3 connecting to redis:6379. Temporary failure in name resolution.
+ERROR 2024-03-13 00:00:21,076 django.request Unknown Status Code: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/redis-info/
+WARNING 2024-03-13 00:11:07,396 redisinsight Error reporting database delete success
+WARNING 2024-03-13 00:11:30,419 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:56,114 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:57,123 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:57,837 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:58,084 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:58,277 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:58,467 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:58,640 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:58,828 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:59,002 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:59,252 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:59,483 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:11:59,748 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:12:00,066 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 00:12:19,971 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-13 22:12:42,381 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-13 22:14:19,760 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-13 22:14:28,813 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-13 22:14:30,476 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-13 22:14:31,740 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-13 22:14:31,991 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-13 22:14:32,200 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-13 22:14:32,389 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-13 22:14:32,581 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/

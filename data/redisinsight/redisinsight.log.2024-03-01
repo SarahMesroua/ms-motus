@@ -1,0 +1,6 @@
+WARNING 2024-03-01 15:34:39,389 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-01 15:34:41,822 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-01 15:34:42,500 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-01 15:34:58,785 django.request Bad Request: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/add-key/
+WARNING 2024-03-01 15:36:43,115 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/
+WARNING 2024-03-01 15:36:45,828 django.request Not Found: /api/instance/779eda3b-19a9-48e3-a37f-79d8f1a54876/key-patterns/

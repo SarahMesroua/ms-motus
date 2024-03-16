@@ -1,0 +1,7 @@
+ERROR 2024-03-11 15:07:00,177 django.request Internal Server Error: /api/instance/
+WARNING 2024-03-11 15:07:17,958 django.request Bad Request: /api/instance/
+WARNING 2024-03-11 15:11:08,910 django.request Bad Request: /api/instance/
+WARNING 2024-03-11 23:16:09,125 django.request Unknown Status Code: /api/instance/7f7cf4d7-d78f-4211-a41f-fd6cad6e1c7e/edit/
+WARNING 2024-03-11 23:24:33,049 django.request Unknown Status Code: /api/instance/7f7cf4d7-d78f-4211-a41f-fd6cad6e1c7e/edit/
+WARNING 2024-03-11 23:31:10,517 django.request Unknown Status Code: /api/instance/7f7cf4d7-d78f-4211-a41f-fd6cad6e1c7e/edit/
+WARNING 2024-03-11 23:31:15,782 django.request Unknown Status Code: /api/instance/7f7cf4d7-d78f-4211-a41f-fd6cad6e1c7e/edit/
