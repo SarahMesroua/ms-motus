@@ -172,45 +172,21 @@ Le fichier docker-compose permet la création simultanée de conteneurs des imag
 
 Dans le docker-compose on definit
 - services ou conteneurs qui composent l'application.
-       - redis1 : utilise l'image redis:latest, expose le port 6379 et 
-crée une connexion réseau nommée ms-motus_redis_net. Il monte également 
-un répertoire local ./data/redis/redis1 en tant que volume pour la 
-persistance des données.
-    redis2 : Similaire à redis1, ce 
-service utilise l'image redis:latest, expose le port 6380 et se connecte
-également au réseau ms-motus_redis_net. Il monte ./data/redis/redis2 en
-tant que volume.
-    redisinsight : Ce service utilise l'image 
-redislabs/redisinsight:latest, expose le port 8001 et se connecte au 
-réseau ms-motus_redis_net. Il monte ./data/redisinsight en tant que 
-volume pour le stockage des données. Il dépend des services redis1 et 
-redis2, ce qui signifie qu'il démarrera après que ces services soient 
-opérationnels.
-    auth : Ce service est construit en utilisant 
-le répertoire ./auth comme contexte de construction. Il expose le port 
-4000 et définit la variable d'environnement REDIS_URL sur 
-redis://redis2:6379. Il se connecte au réseau ms-motus_redis_net et 
-dépend du service redis2.
-    motus : Ce service est construit en
-utilisant le répertoire ./motus comme contexte de construction. Il 
-expose le port 3000 et se connecte au réseau ms-motus_redis_net.
+    - redis1 : utilise l'image redis:latest, expose le port 6379 et crée une connexion réseau nommée ms-motus_redis_net. Il monte également  un répertoire local ./data/redis/redis1 en tant que volume pour la persistance des données.
+    - redis2 : Similaire à redis1, ce  service utilise l'image redis:latest, expose le port 6380 et se connecte également au réseau ms-motus_redis_net. Il monte ./data/redis/redis2 en tant que volume.
+    - redisinsight : Ce service utilise l'image redislabs/redisinsight:latest, expose le port 8001 et se connecte au réseau ms-motus_redis_net. Il monte ./data/redisinsight en tant que volume pour le stockage des données. Il dépend des services redis1 et redis2, ce qui signifie qu'il démarrera après que ces services soient opérationnels.
+    - auth : Ce service est construit en utilisant le répertoire ./auth comme contexte de construction. Il expose le port 4000 et définit la variable d'environnement REDIS_URL sur redis://redis2:6379. Il se connecte au réseau ms-motus_redis_net et dépend du service redis2.
+    - motus : Ce service est construit en utilisant le répertoire ./motus comme contexte de construction. Il expose le port 3000 et se connecte au réseau ms-motus_redis_net.
+    - score : Ce service est construit en utilisant le répertoire ./score comme contexte de construction. Il expose le port 3500 et définit la variable d'environnement REDIS_URL sur redis://redis1:6379. Il se connecte au réseau ms-motus_redis_net.
 
-    score : Ce service est construit en utilisant le répertoire ./score 
-comme contexte de construction. Il expose le port 3500 et définit la 
-variable d'environnement REDIS_URL sur redis://redis1:6379. Il se 
-connecte au réseau ms-motus_redis_net.
-networks : Cette section définit les réseaux utilisés par les services.
-
-    ms-motus_redis_net : Ce réseau est créé avec le pilote IPAM (IP 
-Address Management) default. Il est configuré avec le sous-réseau 
-172.28.0.0/16, ce qui spécifie la plage d'adresses IP pouvant être 
-utilisée par les conteneurs connectés à ce réseau.
+- networks : Cette section définit les réseaux utilisés par les services.
+    - ms-motus_redis_net : Ce réseau est créé avec le pilote IPAM (IP Address Management) default. Il est configuré avec le sous-réseau 172.28.0.0/16, ce qui spécifie la plage d'adresses IP pouvant être utilisée par les conteneurs connectés à ce réseau.
 
 # Configuration et Utilisation :wrench:
     
 1. Clonez ce répertoire sur votre machine locale :  ```git clone https://github.com/SarahMesroua/ms-motus.git```. Si vous avez un message d'erreur ```acces denied``` faire la commande `git config --get user.email`
 2. Se placer dans le répertoire ms-motus et ouvrir un terminal.
-3. Modifier les autorisations du fichier ```chmod -R 777 ./data/redisinsight``
+3. Modifier les autorisations du fichier ```chmod -R 777 ./data/redisinsight```
 
 4. Vous pouvez maintenant accéder à l'application Motus en lancant la commande ```docker-compose up ``` et en ouvrant le navigateur sur l'URL appropriée.
 
