@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  redis1:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - redis_net
+    volumes:
+      - ./data/redis/redis1:/data
+    restart: always
+
+  redis2:
+    image: redis:latest
+    ports:
+      - "6380:6379"
+    networks:
+      - redis_net
+    volumes:
+      - ./data/redis/redis2:/data
+    restart: always
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "8001:8001"
+    networks:
+      - redis_net
+    volumes:
+      - ./data/redisinsight:/db
+    restart: always
+    depends_on:
+      - redis1
+      - redis2
+
+networks:
+  redis_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
