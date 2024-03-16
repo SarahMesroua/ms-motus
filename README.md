@@ -106,7 +106,7 @@ Ce service est responsable de la gestion du système de score de l'application M
   - Route `/callback` gère la réponse après une authentification réussie. Lorsqu'un utilisateur est redirigé vers cette route après s'être authentifié, elle récupère le code d'autorisation, effectue une requête vers un serveur d'authentification pour échanger le code contre un jeton d'accès. Le ticket d'accès est ensuite vérifié et le nom d'utilisateur est extrait à partir de celui-ci. Enfin, le nom d'utilisateur est stocké dans la session de l'utilisateur et l'utilisateur est redirigé vers la page d'accueil.
   -  Route `/logout` gère la déconnexion de l'utilisateur. Supprime le ticket et la session et redirige l'utilisateur vers la page d'accueil.
   - Route racine `'/'` renvoie le fichier "motus.html" situé dans le dossier "www".
-  - Route `/wordOfTheDay` permet de génerer le mot du jour à partir de la liste des mots (fichier txt) et de la fonction ‘generateDailyRandomNumber` qui génère un nombre aléatoire quotidien basé sur la date actuelle.
+  - Route `/wordOfTheDay` permet de génerer le mot du jour à partir de la liste des mots (fichier `liste_francais_utf8.txt`) et de la fonction `generateDailyRandomNumber` qui génère un nombre aléatoire quotidien basé sur la date actuelle.
   - Routes  `/getScore` et  `/setScore/:value` récupère et définit (respectivement) le score de l'utilisateur en effectuant une requête vers un serveur de score.
   - Route `/port` renvoie un message indiquant l'hôte et le port sur lesquels l'application "Motus" est en cours d'exécution.
 
@@ -145,7 +145,7 @@ Le fichier `script_index.js` permet de jouer à une partie de MOTUS. Il gère l'
     - Initialisation de la grille du jeu : Des cellules vides sont ajoutées à chaque ligne de la grille en fonction de la taille du mot du jour.
     - Pré-remplissage de la grille : Les cellules de la grille sont pré-remplies avec des points (`.`) en utilisant la fonction `point()` et première cellule de chaque ligne est remplie avec la première lettre du mot du jour en utilisant la fonction `lettre()`.
     - Traitement des lettres : Lorsque l'utilisateur appuie sur  "Entrée", le mot proposées par l'utilisateur est récupéré et comparé avec le mot du jour.
-    - Gestion du délai : fonction `traitementAvecDelai(i, callback)` définie pour traiter chaque lettre avec un délai de 0,3 seconde entre chaque lettre. cela permet d'ajouter une animation
+    - Gestion du délai : fonction `traitementAvecDelai(i, callback)` définie pour traiter chaque lettre avec un délai de 0,3 seconde entre chaque lettre lors de la vérification. cela permet d'ajouter une animation
     - Passage à la ligne suivante : fonction `passerALaLigneSuivante()` définie pour passer à la ligne suivante une fois que le traitement des lettres est terminé. Si toutes les lettres sont correctement placées, le score est mis à jour et un message de félicitations est affiché. Sinon, la grille passe à la ligne suivante.
     - Suppression d'une lettre : Lorsque l'utilisateur appuie sur la touche "Effacer", la dernière lettre saisie est supprimée de la grille.
 
@@ -161,10 +161,11 @@ Les pages HTML ```login.html```, ```motus.html``` et ```signup.html``` définiss
 ## 7. `Dockerfile` et Docker Compose (`docker-compose.yml`)
 
 # Configuration et Utilisation :wrench:
-1. Installez :
-    - Node.js : 
+1. Installez ou vérifiez que vous avez installer :
+    - Node.js : `sudo apt-get install nodejs`
     - Redis
-    - 
+    - Express : `npm install express`
+    - Haproxy : `sudo apt-get install haproxy`
       
 2. Clonez ce répertoire sur votre machine locale :  ```git clone <url du repo> ```
 
