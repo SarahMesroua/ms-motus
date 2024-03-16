@@ -34,6 +34,9 @@ flowchart TD
     id1 --> |/signup| B
 ```
 
+![image](https://github.com/SarahMesroua/ms-motus/assets/101985507/39447ad0-e7c3-4c60-ab98-51e6df56eef8)
+
+
 ## Diagramme de Séquence
 
 ```mermaid
@@ -170,11 +173,11 @@ Les pages HTML ```login.html```, ```motus.html``` et ```signup.html``` définiss
     - Jsonwebtoken : `npm install jsonwebtoken`
 
 
-      
-2. Clonez ce répertoire sur votre machine locale :  ```git clone git@github.com:SarahMesroua/ms-motus.git
- ```
+    
+2. Clonez ce répertoire sur votre machine locale :  ```git clone https://github.com/SarahMesroua/ms-motus.git```. Si vous avez un message d'erreur ```acces denied``` faire la commande `git config --get user.email`
+3. Modifier les autorisations du fichier ```chmod -R 777 ./data/redisinsight``
 
-3. Vous pouvez maintenant accéder à l'application Motus en lancant la commande ```git clone <url du repo> ``` et en ouvrant le navigateur l'URL appropriée.
+4. Vous pouvez maintenant accéder à l'application Motus en lancant la commande ```docker-compose up ``` et en ouvrant le navigateur sur l'URL appropriée.
 
 # Travail Bonus : Flask sur le répo https://github.com/Benji2709/ms-motus
 - Installer les dépendances flask:
